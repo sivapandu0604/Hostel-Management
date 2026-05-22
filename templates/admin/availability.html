@@ -1,0 +1,175 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/0ceeca1f1f.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static 'navbar.css' %}">
+    <title>Room Availability</title>
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700;800&display=swap");
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+        
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh; /* Set minimum height to viewport height */
+        }
+
+        .container {
+            flex-grow: 1; /* Allow container to grow to fill remaining space */
+        }
+
+        footer {
+            margin-top: auto; /* Push footer to bottom */
+        }
+
+        .overflow{
+            height: 75vh;
+            overflow-y: auto;
+            overflow-x: auto;
+            width: 80%;
+            margin: 20px auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        td {
+            border: 1px solid var(--secondary-color);
+            text-align: center;
+            padding: 8px;
+        }
+        th {
+            background-color: var(--secondary-color);
+            border: 1px solid #fff;
+            color: #fff;
+            padding: 8px;
+            text-align: center;
+        }
+
+        .headings h1{
+            text-align: center;
+            color: var(--secondary-color);
+        }
+        /* Webkit (Safari, Chrome) */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.2); 
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--secondary-color); 
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--secondary-color); 
+        }
+    </style>
+</head>
+<body>
+    <div class="nav1">
+        <div>
+          <h3>IIT Indore</h3>
+        </div>
+  
+        <div class="headings">
+          <a href="{% url 'admin_index' %}">Home</a>
+          <a href="{% url 'admin_requests' %}">Requests</a>
+          <a href="{% url 'availability' %}" class="active">Availability</a>
+        </div>
+          
+          <div class="nav1-login">
+              {% if user.is_authenticated %}
+              <a href='{% url "logout" %}'>Logout</a>
+              {% else %}
+              <a href='{% url "login" %}'>Login</a>
+              {% endif %}
+          </div>
+    </div>
+  
+      <!-- Responsive navbar -->
+    <div class="navbar2">
+          <div class="ham">
+            <p><i class="fa-solid fa-bars"></i></p>
+          </div>
+          <div class="title">
+            <a href="/" class="lo">
+              <img src="" class="logo">
+              <h3>IIT Indore</h3>
+            </a>
+        </div>
+    </div>
+    <div class="side-bar">
+          <div id="close"><i class="fa-solid fa-xmark"></i></div>
+          <ul>
+              <li><a href="{% url 'admin_index' %}">Home</a></li>
+              <li><a href="{% url 'admin_requests' %}">Requests</a></li>
+              <li><a href="{% url 'availability' %}" class="active">Availability</a></li>
+              <li><div class="nav1-login">
+                {% if user.is_authenticated %}
+                <a href='{% url "logout" %}'>Logout</a>
+                {% else %}
+                <a href='{% url "login" %}'>Login</a>
+                {% endif %}
+              </div></li>
+          </ul>
+    </div>
+    <div class="headings">
+        <h1>Rooms Availability</h1>
+    </div>
+    <div class="overflow">
+        <table>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Bookings</th>
+                    <th>Available Rooms</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for date, data in availability_data.items %}
+                <tr>
+                    <td>{{ date }}</td>
+                    <td>{{ data.bookings }}</td>
+                    <td>{{ data.available_rooms }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <footer>
+        <div class="footer">
+          <div class="info">
+            <h4>IIT Indore</h4>
+          </div>
+          <div class="social">
+            <ul>
+              <li><a href="#"><i class="fa-brands fa-instagram"></i></a></li>
+              <li><a href="#"><i class="fa-brands fa-linkedin"></i></a></li>
+              <li><a href="#"><i class="fa-brands fa-twitter"></i></a></li>
+              <li><a href="#"><i class="fa-brands fa-facebook"></i></a></li>
+            </ul>
+          </div>
+          <div class="rights">
+            <p><i class="fa-solid fa-copyright"></i> Copyrights reserved.</p>
+          </div>
+        </div>
+        
+    </footer>
+    
+    <script src="{% static 'script.js' %}"></script>
+</body>
+</html>
